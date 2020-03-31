@@ -19,6 +19,8 @@
         <td>Ime živila</td>
         <td>Datum vpisa</td>
         <td>Datum poteka</td>
+        <td>Količina</td>
+        <td style="width: 100px;">Dodaj živilo</td>
         <td style="width: 100px;">Izbriši živilo</td>
     </thead>
     {% for el in ListOfFoodItems %}
@@ -26,10 +28,17 @@
             <td>{{el.ImeZivila}}</td>
             <td>{{el.DatumVpisa.strftime('%d.%m.%Y')}}</td>
             <td>{{el.DatumPoteka.strftime('%d.%m.%Y')}}</td>
-            <td style="width: 100px;">
-                <form method="post" action="/DeleteFoodItem">
+            <td>{{el.Kolicina}}</td>
+            <td style="width: 125px;">
+                <form method="post" action="/AddDeleteFoodItem">
+                    <input type="hidden" id="ItemID" name="FoodItemID" value="{{el.ID}}">
+                    <input type="submit" class="ButtonSubmit" name="SubmitButton" value="+">
+                </form>
+            </td>
+            <td style="width: 125px;">
+                <form method="post" action="/AddDeleteFoodItem">
                     <input type="hidden" id="FoodItemID" name="FoodItemID" value="{{el.ID}}">
-                    <input type="submit" class="ButtonSubmit" value="X">
+                    <input type="submit" class="ButtonSubmit" name="SubmitButton" value="-">
                 </form>
             </td>
         </tr>
