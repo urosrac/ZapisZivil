@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel = "stylesheet" type = "text/css" href = "../static/css/style.css" />
+    <link rel = "stylesheet" type = "text/css" href = "../static/css/TableStyle.css" />
+    <title>Potekla živila</title>
+    <style>
+        input[disabled]{
+            color: white;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+<div class="topnav">
+  <a href="/">Pregled živil</a>
+  <a href="/DodajZivila">Dodaj živila</a>
+  <a class="active" href="/UrejanjePoteklih">Potekla in izbrisana živila</a>
+</div>
+<table class="TableOfFood">
+    <thead>
+        <td>Ime živila</td>
+        <td>Datum vpisa</td>
+        <td>Datum poteka</td>
+        <td colspan="2">Obnovi / Odstrani </td>
+    </thead>
+    {% for el in ListOfExpiredOrDeletedFoodItems %}
+        <tr style="background-color: {% if el.DatumPoteka <= CurrentDate1 %}rgba(255,165,0,0.9);{% elif el.DatumPoteka <= CurrentDate2 %}rgba(255,165,0,0.5){% endif %};">
+            <td>{{el.ImeZivila}}</td>
+            <td>{{el.DatumVpisa.strftime('%d.%m.%Y')}}</td>
+            <td>{{el.DatumPoteka.strftime('%d.%m.%Y')}}</td>
+            <td>
+                <form method="post" action="/DeleteOrRestoreFoodItem">
+                    <input type="hidden" id="FoodItemID" name="FoodItemID" value="{{el.ID}}">
+                    <input type="submit" class="Test" name="SubmitButton" value="#">
+                    <input type="submit" class="Test" name="SubmitButton" value="X">
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

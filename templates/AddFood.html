@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel = "stylesheet" type = "text/css" href = "../static/css/style.css" />
+    <link rel = "stylesheet" type = "text/css" href = "../static/css/FormStyle.css" />
+    <title>Dodaj živila</title>
+</head>
+<body>
+<div class="topnav">
+  <a href="/">Pregled živil</a>
+  <a class="active" href="/DodajZivila">Dodaj živila</a>
+  <a href="/UrejanjePoteklih">Potekla in izbrisana živila</a>
+</div>
+<div class="FormDiv">
+  <form  method="post" action="/AddedFoodItem">
+    <label for="FoodName">Ime živila:</label>
+    <input type="text" id="FoodName" name="FoodName" required>
+    <label for="ExpirationDate">Datum poteka:</label>
+    <input type="date" id="ExpirationDate" name="ExpirationDate" required>
+    <input type="submit" value="Vpiši">
+  </form>
+</div>
+</body>
+</html>
