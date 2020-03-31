@@ -8,7 +8,7 @@ def index():
     ListOfFoodItems = db.query(FoodItems).filter_by(IsExpired=0, IsRemoved=0).filter(FoodItems.Kolicina > 0).order_by(FoodItems.DatumPoteka.asc()).all()
     i, l = 0, len(ListOfFoodItems)
     while i < l:
-        if ListOfFoodItems[i].DatumPoteka < datetime.now() - timedelta(days = 1):
+        if ListOfFoodItems[i].DatumPoteka and ListOfFoodItems[i].DatumPoteka < datetime.now() - timedelta(days = 1):
             el = ListOfFoodItems.pop(i)
             el.IsExpired = 1
             db.commit()
@@ -26,9 +26,14 @@ def AddFood():
 
 @app.route("/AddedFoodItem", methods = ["GET", "POST"])
 def AddedFoodItem():
+    DatumPoteka = request.form.get("ExpirationDate")
+    if not DatumPoteka:
+        DatumPoteka = None
+    else:
+        DatumPoteka = datetime.strptime(DatumPoteka, '%Y-%m-%d')
     FoodItem = FoodItems(ImeZivila = request.form.get("FoodName"),
                          DatumVpisa = datetime.now(),
-                         DatumPoteka = datetime.strptime(request.form.get("ExpirationDate"), '%Y-%m-%d'),
+                         DatumPoteka = DatumPoteka,
                          Kolicina = request.form.get("Quantity"),
                          IsExpired = 0,
                          IsRemoved = 0)
@@ -51,7 +56,7 @@ def DeletedFood():
     ListOfDeletedFoodItems = db.query(FoodItems).filter_by(IsExpired = 0, IsRemoved = 0, Kolicina = 0).order_by(FoodItems.DatumPoteka.asc()).all()
     i, l = 0, len(ListOfDeletedFoodItems)
     while i < l:
-        if ListOfDeletedFoodItems[i].DatumPoteka < datetime.now() - timedelta(days = 1):
+        if ListOfDeletedFoodItems[i].DatumPoteka and ListOfDeletedFoodItems[i].DatumPoteka < datetime.now() - timedelta(days = 1):
             el = ListOfDeletedFoodItems.pop(i)
             el.IsExpired = 1
             db.commit()
