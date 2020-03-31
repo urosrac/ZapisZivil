@@ -27,15 +27,15 @@
         <td colspan="2">Obnovi / Odstrani </td>
     </thead>
     {% for el in ListOfExpiredOrDeletedFoodItems %}
-        <tr style="background-color: {% if el.DatumPoteka <= CurrentDate1 %}rgba(255,165,0,0.9);{% elif el.DatumPoteka <= CurrentDate2 %}rgba(255,165,0,0.5){% endif %};">
+        <tr class="TR" style="background-color: {% if el.DatumPoteka <= CurrentDate0 %}rgb(255, 69, 0){% elif el.DatumPoteka <= CurrentDate1 %}rgba(255,165,0,0.9);{% elif el.DatumPoteka <= CurrentDate2 %}rgba(255,165,0,0.5){% endif %};">
             <td>{{el.ImeZivila}}</td>
             <td>{{el.DatumVpisa.strftime('%d.%m.%Y')}}</td>
             <td>{{el.DatumPoteka.strftime('%d.%m.%Y')}}</td>
             <td>
                 <form method="post" action="/DeleteOrRestoreFoodItem">
                     <input type="hidden" id="FoodItemID" name="FoodItemID" value="{{el.ID}}">
-                    <input type="submit" class="Test" name="SubmitButton" value="#">
-                    <input type="submit" class="Test" name="SubmitButton" value="X">
+                    <input type="submit" class="ButtonSubmit" name="SubmitButton" value="#">
+                    <input type="submit" class="ButtonSubmit" name="SubmitButton" value="X">
                 </form>
             </td>
         </tr>

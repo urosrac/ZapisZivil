@@ -16,6 +16,7 @@ def index():
             i -= 1
         i += 1
     return render_template("index.html", ListOfFoodItems = ListOfFoodItems,
+                           CurrentDate0 = datetime.now() + timedelta(days=2),
                            CurrentDate1 = datetime.now() + timedelta(days = 5),
                            CurrentDate2 = datetime.now() + timedelta(days = 10))
 
@@ -56,6 +57,7 @@ def ExpiredFood():
             i -= 1
         i += 1
     return render_template("ExpiredFood.html", ListOfExpiredOrDeletedFoodItems = ListOfExpiredOrDeletedFoodItems,
+                           CurrentDate0 = datetime.now() + timedelta(days = 2),
                            CurrentDate1 = datetime.now() + timedelta(days = 5),
                            CurrentDate2 = datetime.now() + timedelta(days = 10))
 

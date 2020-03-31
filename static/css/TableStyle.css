@@ -16,6 +16,12 @@
 .TableOfFood thead td:last-child{
     border-top-right-radius: 10px;
 }
+.TableOfFood .TR:last-child td:first-child{
+    border-bottom-left-radius: 10px;
+}
+.TableOfFood .TR:last-child td:last-child{
+    border-bottom-right-radius: 10px;
+}
 .TableOfFood td{
     border: 1px solid black;
     width: 200px;
@@ -34,7 +40,7 @@
 .TableOfFood tr td:last-child {
   border-right: 0;
 }
-.Test {
+.ButtonSubmit {
   height: 30px;
   margin: 5px;
   cursor: pointer;
