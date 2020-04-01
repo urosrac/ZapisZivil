@@ -5,7 +5,7 @@ app = Flask(__name__)
 db.create_all()
 @app.route("/")
 def index():
-    ListOfFoodItems = db.query(FoodItems).filter_by(IsExpired=0, IsRemoved=0).filter(FoodItems.Kolicina > 0).order_by(FoodItems.DatumPoteka.asc()).all()
+    ListOfFoodItems = db.query(FoodItems).filter_by(IsExpired=0, IsRemoved=0).filter(FoodItems.Kolicina > 0).order_by(FoodItems.DatumPoteka == None, FoodItems.DatumPoteka.asc()).all()
     i, l = 0, len(ListOfFoodItems)
     while i < l:
         if ListOfFoodItems[i].DatumPoteka and ListOfFoodItems[i].DatumPoteka < datetime.now() - timedelta(days = 1):
@@ -24,7 +24,7 @@ def index():
 def AddFood():
     return render_template("AddFood.html")
 
-@app.route("/AddedFoodItem", methods = ["GET", "POST"])
+@app.route("/AddedFoodItem", methods = ["POST"])
 def AddedFoodItem():
     DatumPoteka = request.form.get("ExpirationDate")
     if not DatumPoteka:
@@ -41,7 +41,7 @@ def AddedFoodItem():
     db.commit()
     return redirect(url_for("AddFood"))
 
-@app.route("/AddDeleteFoodItem", methods = ["GET","POST"])
+@app.route("/AddDeleteFoodItem", methods = ["POST"])
 def AddDeleteFoodItem():
     FoodItem = db.query(FoodItems).get(request.form.get("FoodItemID"))
     if request.form["SubmitButton"] == "+":
@@ -53,7 +53,7 @@ def AddDeleteFoodItem():
 
 @app.route("/UrejanjePoteklih")
 def DeletedFood():
-    ListOfDeletedFoodItems = db.query(FoodItems).filter_by(IsExpired = 0, IsRemoved = 0, Kolicina = 0).order_by(FoodItems.DatumPoteka.asc()).all()
+    ListOfDeletedFoodItems = db.query(FoodItems).filter_by(IsExpired = 0, IsRemoved = 0, Kolicina = 0).order_by(FoodItems.DatumPoteka == None, FoodItems.DatumPoteka.asc()).all()
     i, l = 0, len(ListOfDeletedFoodItems)
     while i < l:
         if ListOfDeletedFoodItems[i].DatumPoteka and ListOfDeletedFoodItems[i].DatumPoteka < datetime.now() - timedelta(days = 1):
@@ -68,7 +68,7 @@ def DeletedFood():
                            CurrentDate1 = datetime.now() + timedelta(days = 5),
                            CurrentDate2 = datetime.now() + timedelta(days = 10))
 
-@app.route("/DeleteOrRestoreFoodItem", methods = ["GET","POST"])
+@app.route("/DeleteOrRestoreFoodItem", methods = ["POST"])
 def DeleteOrRestoreFoodItem():
     FoodItem = db.query(FoodItems).get(request.form.get("FoodItemID"))
     if request.form["SubmitButton"] == "X":
